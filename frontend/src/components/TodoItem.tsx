@@ -1,6 +1,7 @@
 import { GripVertical, PencilIcon, TrashIcon, CalendarIcon } from 'lucide-react';
 import { Todo } from '@/types/todo';
-import { Button, Badge, Checkbox, Card } from '@/components/ui';
+import { Button, Badge, Card } from '@/components/ui';
+
 interface TodoItemProps {
   todo: Todo;
   onToggle: (id: string, completed: boolean) => void;
@@ -9,6 +10,7 @@ interface TodoItemProps {
   isDragDisabled?: boolean;
   dragHandleProps?: any;
 }
+
 const priorityBadgeVariants: Record<number, 'error' | 'warning' | 'default' | 'secondary'> = {
   5: 'error',
   4: 'warning', 
@@ -16,6 +18,7 @@ const priorityBadgeVariants: Record<number, 'error' | 'warning' | 'default' | 's
   2: 'secondary',
   1: 'secondary'
 };
+
 export function TodoItem({
   todo,
   onToggle,
@@ -28,6 +31,7 @@ export function TodoItem({
     month: 'short',
     day: 'numeric'
   });
+
   return (
     <Card
       variant="default"
@@ -38,22 +42,22 @@ export function TodoItem({
         <div
           {...dragHandleProps}
           className={`text-slate-400 mt-0.5 sm:mt-0 ${isDragDisabled ? 'opacity-0 w-0 overflow-hidden' : 'cursor-grab active:cursor-grabbing hover:text-slate-600'}`}>
-          
           <GripVertical size={16} className="sm:w-5 sm:h-5" />
         </div>
 
         <div className="flex-shrink-0 mt-0.5 sm:mt-0">
-          <Checkbox
+          <input
+            type="checkbox"
             checked={todo.completed}
             onChange={(e) => onToggle(todo.id, e.target.checked)}
             disabled={todo.completed}
+            className="w-4 h-4 sm:w-5 sm:h-5 rounded border-2 border-slate-300 checked:bg-blue-500 checked:border-blue-500 cursor-pointer"
           />
         </div>
 
         <div className="flex-1 min-w-0 flex flex-col gap-1 sm:gap-2">
           <span
             className={`text-sm sm:text-base font-medium truncate transition-colors ${todo.completed ? 'text-slate-400 line-through' : 'text-slate-900'}`}>
-            
             {todo.title}
           </span>
 
@@ -63,7 +67,6 @@ export function TodoItem({
             </Badge>
 
             <div className={`flex items-center gap-1 ${todo.completed ? 'text-slate-400' : 'text-slate-500'}`}>
-              
               <CalendarIcon size={12} className="sm:w-3 sm:h-3" />
               <span className="hidden sm:inline">{formattedDate}</span>
               <span className="sm:hidden">{formattedDate.split(' ')[0]}</span>
@@ -90,6 +93,6 @@ export function TodoItem({
           />
         </div>
       </div>
-    </Card>);
-
+    </Card>
+  );
 }
