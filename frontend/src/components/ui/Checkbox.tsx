@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
-import { motion } from 'framer-motion';
 
-export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onDrag'> {
+export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -22,22 +21,20 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       <div className="w-full">
         <div className="flex items-start">
           <div className="relative flex items-center">
-            <motion.input
+            <input
               ref={ref}
               type="checkbox"
               className="peer sr-only"
               checked={checked}
-              {...(props as any)}
+              {...props}
             />
             
-            <motion.div
+            <div
               className={`w-4 h-4 sm:w-5 sm:h-5 rounded border-2 cursor-pointer transition-all flex items-center justify-center ${
                 checked
                   ? 'bg-blue-500 border-blue-500'
                   : 'border-slate-300 bg-white hover:border-slate-400'
               } ${error ? 'border-red-300' : ''} ${className}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 const input = document.querySelector(`input[name="${props.name}"]`) as HTMLInputElement;
                 if (input && !props.disabled) {
@@ -46,17 +43,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 }
               }}
             >
-              <motion.svg
+              <svg
                 width="10"
                 height="10"
                 viewBox="0 0 12 12"
                 fill="none"
-                initial={false}
-                animate={{
-                  scale: checked ? 1 : 0,
-                  opacity: checked ? 1 : 0
-                }}
-                transition={{ duration: 0.1 }}
+                className={`transition-all ${checked ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
               >
                 <path
                   d="M10 3L4.5 8.5L2 6"
@@ -65,8 +57,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </motion.svg>
-            </motion.div>
+              </svg>
+            </div>
           </div>
           
           {label && (

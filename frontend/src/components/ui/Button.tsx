@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import { forwardRef } from 'react';
 
-export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag'> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
@@ -38,14 +37,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     return (
-      <motion.button
+      <button
         ref={ref}
         className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
         disabled={disabled || loading}
-        whileHover={{ scale: loading || disabled ? 1 : 1.02 }}
-        whileTap={{ scale: loading || disabled ? 1 : 0.98 }}
-        transition={{ duration: 0.1 }}
-        {...(props as any)}
+        {...props}
       >
         {loading && (
           <Loader2 className="w-4 h-4 animate-spin mr-2" />
@@ -54,7 +50,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="mr-2">{icon}</span>
         )}
         {children}
-      </motion.button>
+      </button>
     );
   }
 );

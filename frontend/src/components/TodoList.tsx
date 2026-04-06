@@ -4,7 +4,6 @@ import {
   Draggable,
   DropResult } from
 'react-beautiful-dnd';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Todo } from '@/types/todo';
 import { TodoItem } from '@/components/TodoItem';
 import { CheckCircle2Icon } from 'lucide-react';
@@ -31,49 +30,18 @@ export function TodoList({
   };
   if (todos.length === 0) {
     return (
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 20,
-          scale: 0.95
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-          scale: 1
-        }}
-        transition={{
-          duration: 0.4,
-          ease: "easeOut"
-        }}
-        className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center bg-white rounded-xl border border-slate-100 shadow-sm">
-        
-        <motion.div 
-          className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-3 sm:mb-4"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
-        >
+      <div className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center bg-white rounded-xl border border-slate-100 shadow-sm">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-3 sm:mb-4">
           <CheckCircle2Icon size={24} className="sm:w-8 sm:h-8" />
-        </motion.div>
-        <motion.h3 
-          className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-1"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.3 }}
-        >
+        </div>
+        <h3 className="text-base sm:text-lg font-semibold text-slate-800 mb-1">
           All caught up!
-        </motion.h3>
-        <motion.p 
-          className="text-xs sm:text-sm text-slate-500 max-w-sm"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.3 }}
-        >
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-500 max-w-sm">
           There are no tasks matching your current view. Add a new task above to
           get started.
-        </motion.p>
-      </motion.div>);
+        </p>
+      </div>);
 
   }
   return (
@@ -85,8 +53,7 @@ export function TodoList({
           ref={provided.innerRef}
           className="space-y-2 sm:space-y-3">
           
-            <AnimatePresence mode="popLayout">
-              {todos.map((todo, index) =>
+          {todos.map((todo, index) =>
             <Draggable
               key={todo.id}
               draggableId={todo.id}
@@ -120,7 +87,6 @@ export function TodoList({
               }
                 </Draggable>
             )}
-            </AnimatePresence>
             {provided.placeholder}
           </div>
         }

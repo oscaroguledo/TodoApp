@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon, CheckIcon, XIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { Todo } from '@/types/todo';
 import { Dropdown } from '@/components/Dropdown';
 import { DatePicker } from '@/components/DatePicker';
@@ -60,11 +59,8 @@ export function TodoForm({
     }
   };
   return (
-    <motion.form
+    <form
       onSubmit={handleSubmit}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
       className="bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3 sm:gap-4">
       
       <div className="w-full">
@@ -129,6 +125,6 @@ export function TodoForm({
         </Button>
         }
       </div>
-    </motion.form>);
+    </form>);
 
 }

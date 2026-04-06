@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
-import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onDrag'> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -43,7 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           
-          <motion.input
+          <input
             ref={ref}
             className={`w-full px-2.5 sm:px-3 py-2 bg-white border rounded-lg text-sm sm:text-base text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-400 ${
               startIcon ? 'pl-8 sm:pl-10' : ''
@@ -53,9 +52,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               error ? 'border-red-300 focus:ring-red-500' : 'border-slate-300 dark:border-slate-600'
             } ${className}`}
             value={value}
-            whileFocus={{ scale: 1.01 }}
-            transition={{ duration: 0.1 }}
-            {...(props as any)}
+            {...props}
           />
           
           {(endIcon || showClearButton) && (

@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 export interface BadgeProps {
   children: React.ReactNode;
   variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
@@ -29,13 +27,8 @@ export const Badge = ({
   };
 
   return (
-    <motion.span
-      className={`inline-flex items-center border rounded-full ${variants[variant]} ${sizes[size]} ${className}`}
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2 }}
-    >
+    <span className={`inline-flex items-center border rounded-full ${variants[variant]} ${sizes[size]} ${className}`}>
       {children}
-    </motion.span>
+    </span>
   );
 };

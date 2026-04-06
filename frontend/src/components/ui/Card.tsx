@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion';
 import { forwardRef } from 'react';
 
-export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'> {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'outlined' | 'elevated';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
@@ -30,19 +29,15 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     };
 
     return (
-      <motion.div
+      <div
         ref={ref}
         className={`rounded-xl transition-all ${variants[variant]} ${paddings[padding]} ${className} ${
           hover ? 'hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600' : ''
         }`}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        whileHover={hover ? { scale: 1.01 } : {}}
-        {...(props as any)}
+        {...props}
       >
         {children}
-      </motion.div>
+      </div>
     );
   }
 );
