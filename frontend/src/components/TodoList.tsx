@@ -1,33 +1,16 @@
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult } from
-'react-beautiful-dnd';
 import { Todo } from '@/types/todo';
 import { TodoItem } from '@/components/TodoItem';
 import { CheckCircle2Icon } from 'lucide-react';
 interface TodoListProps {
   todos: Todo[];
-  onToggle: (id: string, done: boolean) => void;
   onEdit: (todo: Todo) => void;
   onDelete: (id: string) => void;
-  onReorder: (startIndex: number, endIndex: number) => void;
-  isDragDisabled: boolean;
 }
 export function TodoList({
   todos,
-  onToggle,
   onEdit,
-  onDelete,
-  onReorder,
-  isDragDisabled
+  onDelete
 }: TodoListProps) {
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
-    if (result.source.index === result.destination.index) return;
-    onReorder(result.source.index, result.destination.index);
-  };
   if (todos.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center bg-white rounded-xl border border-slate-100 shadow-sm">
@@ -45,40 +28,15 @@ export function TodoList({
 
   }
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="todo-list" isDropDisabled={isDragDisabled}>
-        {(provided) =>
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          className="space-y-2 sm:space-y-3">
-          
-          {todos.map((todo, index) =>
-            <Draggable
-              key={todo.id}
-              draggableId={todo.id}
-              index={index}
-              isDragDisabled={false}>
-              
-                  {(provided, snapshot) =>
-                    <TodoItem
-                      innerRef={provided.innerRef}
-                      draggableProps={provided.draggableProps}
-                      dragHandleProps={isDragDisabled ? {} : provided.dragHandleProps}
-                      isDragging={snapshot.isDragging}
-                      todo={todo}
-                      onToggle={onToggle}
-                      onEdit={onEdit}
-                      onDelete={onDelete}
-                      isDragDisabled={isDragDisabled}
-                    />
-                  }
-                </Draggable>
-            )}
-            {provided.placeholder}
-          </div>
-        }
-      </Droppable>
-    </DragDropContext>);
-
+    <div className="space-y-2 sm:space-y-3">
+      {todos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </div>
+  );
 }

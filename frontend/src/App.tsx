@@ -20,8 +20,7 @@ export function App() {
     loading,
     addTodo,
     updateTodo,
-    deleteTodo,
-    reorderTodos
+    deleteTodo
   } = useTodos();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('none');
@@ -103,8 +102,6 @@ export function App() {
   }, [filteredAndSortedTodos, currentPage, todosPerPage]);
 
   const totalPages = Math.ceil(filteredAndSortedTodos.length / todosPerPage);
-  // Disable drag and drop if we are sorting or searching
-  const isDragDisabled = sortBy !== 'none' || searchQuery.trim() !== '';
   const handleAddOrUpdate = (todoData: Omit<Todo, 'id'>) => {
     if (editingTodo) {
       updateTodo(editingTodo.id, todoData);
@@ -213,15 +210,8 @@ export function App() {
         }>
           <TodoList
             todos={paginatedTodos}
-            onToggle={(id, completed) =>
-            updateTodo(id, {
-              completed
-            })
-            }
             onEdit={setEditingTodo}
-            onDelete={deleteTodo}
-            onReorder={reorderTodos}
-            isDragDisabled={isDragDisabled} />
+            onDelete={deleteTodo} />
         </Suspense>
 
         {/* Pagination */}
