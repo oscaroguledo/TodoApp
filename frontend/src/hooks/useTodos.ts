@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Todo } from '../types/todo';
+import { Todo } from '@/types/todo';
 
 const API_URL = 'http://localhost:3000/todos';
 

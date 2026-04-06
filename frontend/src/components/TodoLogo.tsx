@@ -1,4 +1,3 @@
-import React from 'react';
 export function TodoLogo({ className = '' }: {className?: string;}) {
   return (
     <svg

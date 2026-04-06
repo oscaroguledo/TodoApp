@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusIcon, CheckIcon, XIcon } from 'lucide-react';
-import { Todo } from '../types/todo';
+import { motion } from 'framer-motion';
+import { Todo } from '@/types/todo';
+import { Dropdown } from '@/components/Dropdown';
+import { DatePicker } from '@/components/DatePicker';
+import { Button, Input } from '@/components/ui';
 interface TodoFormProps {
   onSubmit: (todo: Omit<Todo, 'id'>) => void;
   initialData?: Todo | null;
@@ -32,6 +36,14 @@ export function TodoForm({
     setPriority(3);
     setDueDate('');
   };
+
+  const priorityOptions = [
+    { value: 5, label: 'P5 - Critical' },
+    { value: 4, label: 'P4 - High' },
+    { value: 3, label: 'P3 - Medium' },
+    { value: 2, label: 'P2 - Low' },
+    { value: 1, label: 'P1 - Minimal' }
+  ];
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!task.trim()) return;
@@ -48,71 +60,75 @@ export function TodoForm({
     }
   };
   return (
-    <form
+    <motion.form
       onSubmit={handleSubmit}
-      className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col gap-3 sm:gap-4">
       
-      <div className="flex-1 w-full">
-        <input
-          type="text"
+      <div className="w-full">
+        <Input
           placeholder="What needs to be done?"
           value={task}
           onChange={(e) => setTask(e.target.value)}
-          className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-          required />
-        
+          required
+        />
       </div>
 
-      <div className="flex gap-3 w-full sm:w-auto">
-        <select
-          value={priority}
-          onChange={(e) => setPriority(Number(e.target.value))}
-          className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
-          
-          <option value={5}>P5 - Critical</option>
-          <option value={4}>P4 - High</option>
-          <option value={3}>P3 - Medium</option>
-          <option value={2}>P2 - Low</option>
-          <option value={1}>P1 - Minimal</option>
-        </select>
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="flex gap-3 sm:gap-4 w-full sm:w-auto">
+          <Dropdown
+            options={priorityOptions}
+            value={priority}
+            onChange={(value) => setPriority(Number(value))}
+            className="flex-1 sm:w-32"
+          />
 
-        <input
-          type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-          className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
-          required />
-        
+          <DatePicker
+            value={dueDate}
+            onChange={setDueDate}
+            className="flex-1 sm:w-40"
+          />
+        </div>
 
         {initialData ?
-        <div className="flex gap-2 ml-auto sm:ml-0">
-            <button
-            type="submit"
-            className="p-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors flex items-center justify-center"
-            title="Update Todo">
-            
-              <CheckIcon size={20} />
-            </button>
-            <button
-            type="button"
-            onClick={onCancelEdit}
-            className="p-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center"
-            title="Cancel Edit">
-            
-              <XIcon size={20} />
-            </button>
+        <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+            <Button
+              type="submit"
+              size="sm"
+              icon={<CheckIcon size={14} />}
+              className="flex-1 sm:flex-initial"
+              title="Update Todo"
+            >
+              <span className="hidden sm:inline">Update</span>
+              <span className="sm:hidden">Save</span>
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              icon={<XIcon size={14} />}
+              onClick={onCancelEdit}
+              className="flex-1 sm:flex-initial"
+              title="Cancel Edit"
+            >
+              <span className="hidden sm:inline">Cancel</span>
+              <span className="sm:hidden">X</span>
+            </Button>
           </div> :
 
-        <button
+        <Button
           type="submit"
           disabled={!task.trim()}
-          className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 ml-auto sm:ml-0 font-medium">
-          
-            <PlusIcon size={20} />
-            <span className="hidden sm:inline">Add</span>
-          </button>
+          icon={<PlusIcon size={14} />}
+          className="w-full sm:w-auto"
+        >
+          <span className="hidden sm:inline">Add Task</span>
+          <span className="sm:hidden">Add</span>
+        </Button>
         }
       </div>
-    </form>);
+    </motion.form>);
 
 }

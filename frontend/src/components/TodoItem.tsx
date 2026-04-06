@@ -1,7 +1,6 @@
-import React from 'react';
 import { GripVertical, PencilIcon, TrashIcon, CalendarIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Todo } from '../types/todo';
+import { Todo } from '@/types/todo';
+import { Button, Badge, Checkbox, Card } from '@/components/ui';
 interface TodoItemProps {
   todo: Todo;
   onToggle: (id: string, done: boolean) => void;
@@ -9,12 +8,12 @@ interface TodoItemProps {
   onDelete: (id: string) => void;
   isDragDisabled?: boolean;
 }
-const priorityColors: Record<number, string> = {
-  5: 'bg-red-500',
-  4: 'bg-orange-500',
-  3: 'bg-yellow-500',
-  2: 'bg-blue-500',
-  1: 'bg-gray-400'
+const priorityBadgeVariants: Record<number, 'error' | 'warning' | 'default' | 'secondary'> = {
+  5: 'error',
+  4: 'warning', 
+  3: 'default',
+  2: 'secondary',
+  1: 'secondary'
 };
 export function TodoItem({
   todo,
@@ -28,88 +27,66 @@ export function TodoItem({
     day: 'numeric'
   });
   return (
-    <div
-      className={`group flex items-center gap-3 p-4 bg-white rounded-xl border shadow-sm transition-all ${todo.done ? 'border-gray-200 bg-gray-50/50' : 'border-gray-100 hover:border-emerald-200 hover:shadow-md'}`}>
-      
-      <div
-        className={`text-gray-400 ${isDragDisabled ? 'opacity-0 w-0 overflow-hidden' : 'cursor-grab active:cursor-grabbing hover:text-gray-600'}`}>
-        
-        <GripVertical size={20} />
-      </div>
-
-      <div className="relative flex items-center justify-center">
-        <input
-          type="checkbox"
-          checked={todo.done}
-          onChange={(e) => onToggle(todo.id, e.target.checked)}
-          className="peer appearance-none w-6 h-6 border-2 border-gray-300 rounded-full checked:bg-emerald-500 checked:border-emerald-500 cursor-pointer transition-colors" />
-        
-        <motion.div
-          initial={false}
-          animate={{
-            scale: todo.done ? 1 : 0,
-            opacity: todo.done ? 1 : 0
-          }}
-          className="absolute pointer-events-none text-white">
+    <Card
+      variant="default"
+      hover={!todo.done}
+      className={`group transition-all ${todo.done ? 'opacity-75' : ''}`}
+    >
+      <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+        <div
+          className={`text-slate-400 mt-0.5 sm:mt-0 ${isDragDisabled ? 'opacity-0 w-0 overflow-hidden' : 'cursor-grab active:cursor-grabbing hover:text-slate-600'}`}>
           
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-4 h-4">
-            
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </motion.div>
-      </div>
+          <GripVertical size={16} className="sm:w-5 sm:h-5" />
+        </div>
 
-      <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-        <span
-          className={`text-base font-medium truncate transition-colors ${todo.done ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
-          
-          {todo.task}
-        </span>
+        <div className="flex-shrink-0 mt-0.5 sm:mt-0">
+          <Checkbox
+            checked={todo.done}
+            onChange={(e) => onToggle(todo.id, e.target.checked)}
+            disabled={todo.done}
+          />
+        </div>
 
-        <div className="flex items-center gap-3 text-sm mt-1 sm:mt-0">
-          <div className="flex items-center gap-1.5">
-            <div
-              className={`w-2.5 h-2.5 rounded-full ${priorityColors[todo.priority]} ${todo.done ? 'opacity-50' : ''}`} />
+        <div className="flex-1 min-w-0 flex flex-col gap-1 sm:gap-2">
+          <span
+            className={`text-sm sm:text-base font-medium truncate transition-colors ${todo.done ? 'text-slate-400 line-through' : 'text-slate-900'}`}>
             
-            <span
-              className={`text-xs font-medium ${todo.done ? 'text-gray-400' : 'text-gray-600'}`}>
-              
+            {todo.task}
+          </span>
+
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
+            <Badge variant={priorityBadgeVariants[todo.priority]} size="sm">
               P{todo.priority}
-            </span>
-          </div>
+            </Badge>
 
-          <div
-            className={`flex items-center gap-1 text-xs ${todo.done ? 'text-gray-400' : 'text-gray-500'}`}>
-            
-            <CalendarIcon size={14} />
-            {formattedDate}
+            <div className={`flex items-center gap-1 ${todo.done ? 'text-slate-400' : 'text-slate-500'}`}>
+              
+              <CalendarIcon size={12} className="sm:w-3 sm:h-3" />
+              <span className="hidden sm:inline">{formattedDate}</span>
+              <span className="sm:hidden">{formattedDate.split(' ')[0]}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-        <button
-          onClick={() => onEdit(todo)}
-          className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
-          title="Edit">
-          
-          <PencilIcon size={18} />
-        </button>
-        <button
-          onClick={() => onDelete(todo.id)}
-          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-          title="Delete">
-          
-          <TrashIcon size={18} />
-        </button>
+        <div className="flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<PencilIcon size={14} />}
+            onClick={() => onEdit(todo)}
+            title="Edit"
+            className="p-1.5 sm:p-2"
+          />
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<TrashIcon size={14} />}
+            onClick={() => onDelete(todo.id)}
+            title="Delete"
+            className="p-1.5 sm:p-2"
+          />
+        </div>
       </div>
-    </div>);
+    </Card>);
 
 }

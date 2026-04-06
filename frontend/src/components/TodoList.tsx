@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   DragDropContext,
   Droppable,
@@ -6,8 +5,8 @@ import {
   DropResult } from
 'react-beautiful-dnd';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Todo } from '../types/todo';
-import { TodoItem } from './TodoItem';
+import { Todo } from '@/types/todo';
+import { TodoItem } from '@/components/TodoItem';
 import { CheckCircle2Icon } from 'lucide-react';
 interface TodoListProps {
   todos: Todo[];
@@ -35,24 +34,45 @@ export function TodoList({
       <motion.div
         initial={{
           opacity: 0,
-          y: 20
+          y: 20,
+          scale: 0.95
         }}
         animate={{
           opacity: 1,
-          y: 0
+          y: 0,
+          scale: 1
         }}
-        className="flex flex-col items-center justify-center py-16 px-4 text-center bg-white rounded-xl border border-gray-100 shadow-sm">
+        transition={{
+          duration: 0.4,
+          ease: "easeOut"
+        }}
+        className="flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 text-center bg-white rounded-xl border border-slate-100 shadow-sm">
         
-        <div className="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mb-4">
-          <CheckCircle2Icon size={32} />
-        </div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-1">
+        <motion.div 
+          className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-3 sm:mb-4"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
+        >
+          <CheckCircle2Icon size={24} className="sm:w-8 sm:h-8" />
+        </motion.div>
+        <motion.h3 
+          className="text-base sm:text-lg font-semibold text-slate-800 mb-1 sm:mb-1"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        >
           All caught up!
-        </h3>
-        <p className="text-gray-500 max-w-sm">
+        </motion.h3>
+        <motion.p 
+          className="text-xs sm:text-sm text-slate-500 max-w-sm"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.3 }}
+        >
           There are no tasks matching your current view. Add a new task above to
           get started.
-        </p>
+        </motion.p>
       </motion.div>);
 
   }
@@ -63,7 +83,7 @@ export function TodoList({
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className="space-y-3">
+          className="space-y-2 sm:space-y-3">
           
             <AnimatePresence mode="popLayout">
               {todos.map((todo, index) =>
@@ -78,18 +98,25 @@ export function TodoList({
                 layout
                 initial={{
                   opacity: 0,
-                  scale: 0.95
+                  scale: 0.95,
+                  y: 20
                 }}
                 animate={{
                   opacity: 1,
-                  scale: 1
+                  scale: 1,
+                  y: 0
                 }}
                 exit={{
                   opacity: 0,
                   scale: 0.95,
+                  y: -20,
                   transition: {
                     duration: 0.2
                   }
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeOut"
                 }}
                 ref={provided.innerRef}
                 {...provided.draggableProps}
@@ -98,7 +125,9 @@ export function TodoList({
                   ...provided.draggableProps.style,
                   ...(snapshot.isDragging ?
                   {
-                    zIndex: 50
+                    zIndex: 50,
+                    transform: provided.draggableProps.style?.transform + ' scale(1.05)',
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
                   } :
                   {})
                 }}>
