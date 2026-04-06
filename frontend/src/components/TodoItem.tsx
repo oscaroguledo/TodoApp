@@ -44,7 +44,6 @@ export function TodoItem({
 
         <div className="flex-shrink-0 mt-0.5 sm:mt-0">
           <Checkbox
-            name={`todo-${todo.id}`}
             checked={todo.completed}
             onChange={(e) => onToggle(todo.id, e.target.checked)}
             disabled={todo.completed}
