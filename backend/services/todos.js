@@ -1,16 +1,27 @@
 import { Todo } from '../models/todo.js';
 
+const mapTodo = (todo) => ({
+  id: todo._id.toString(),
+  title: todo.title,
+  completed: todo.completed,
+  priority: todo.priority,
+  dueDate: todo.dueDate
+});
+
 export const getAllTodos = async () => {
-  return await Todo.find();
+  const todos = await Todo.find();
+  return todos.map(mapTodo);
 };
 
 export const createTodo = async (data) => {
   const todo = new Todo(data);
-  return await todo.save();
+  const saved = await todo.save();
+  return mapTodo(saved);
 };
 
 export const updateTodo = async (id, data) => {
-  return await Todo.findByIdAndUpdate(id, data, { new: true });
+  const updated = await Todo.findByIdAndUpdate(id, data, { new: true });
+  return mapTodo(updated);
 };
 
 export const deleteTodo = async (id) => {
