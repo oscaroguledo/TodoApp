@@ -3,11 +3,11 @@ import {
   SearchIcon,
   ArrowUpDownIcon,
   CalendarClockIcon,
-  AlertCircleIcon } from
+} from
 'lucide-react';
 import { useTodos } from '@/hooks/useTodos';
 import { TodoLogo } from '@/components/TodoLogo';
-import { Input, ThemeToggle } from '@/components/ui';
+import { Input } from '@/components/ui';
 
 // Lazy loaded components
 const TodoForm = lazy(() => import('@/components/TodoForm').then(module => ({ default: module.TodoForm })));
@@ -18,7 +18,6 @@ export function App() {
   const {
     todos,
     loading,
-    error,
     addTodo,
     updateTodo,
     deleteTodo,
@@ -30,6 +29,21 @@ export function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const todosPerPage = 10;
+
+  // System theme detection
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const updateTheme = () => {
+      if (mediaQuery.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+    updateTheme();
+    mediaQuery.addEventListener('change', updateTheme);
+    return () => mediaQuery.removeEventListener('change', updateTheme);
+  }, []);
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -118,21 +132,7 @@ export function App() {
             </div>
           </div>
 
-          {/* Note for Magic Patterns user regarding PWA */}
-          <div className="text-xs text-slate-400 bg-slate-100 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full hidden lg:block">
-            PWA ready: Configure manifest.json after deployment
-          </div>
-
-          <ThemeToggle />
         </header>
-
-        {/* Error Banner */}
-        {error &&
-        <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 text-red-700">
-            <AlertCircleIcon className="shrink-0 mt-0.5 w-4 h-4 sm:w-5 sm:h-5" />
-            <p className="text-xs sm:text-sm">{error}</p>
-          </div>
-        }
 
         {/* Controls: Search & Sort */}
         <div className="mb-4 sm:mb-6 flex flex-col lg:flex-row gap-3 lg:gap-4">
@@ -162,7 +162,7 @@ export function App() {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-3">
             <button
               onClick={() =>
               setSortBy(sortBy === 'priority' ? 'none' : 'priority')

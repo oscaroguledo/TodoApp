@@ -1,5 +1,5 @@
 import "./index.css";
 import { render } from "react-dom";
-import { ThemedApp } from "./ThemedApp";
+import { App } from "./App";
 
-render(<ThemedApp />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));

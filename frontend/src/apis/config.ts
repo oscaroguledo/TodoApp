@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
   // Base URL for API calls - from environment variable
-  BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:3000',
+  BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   
   // Pagination defaults
   DEFAULT_PAGE_SIZE: 10,

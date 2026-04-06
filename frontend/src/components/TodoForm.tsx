@@ -76,7 +76,7 @@ export function TodoForm({
         />
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-4">
         <div className="flex gap-3 sm:gap-4 w-full sm:w-auto">
           <Dropdown
             options={priorityOptions}
