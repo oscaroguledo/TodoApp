@@ -41,7 +41,6 @@ export function TodoItem({
   return (
     <div
       ref={innerRef}
-      {...draggableProps}
       style={{
         ...draggableProps?.style,
         ...(isDragging ? {
