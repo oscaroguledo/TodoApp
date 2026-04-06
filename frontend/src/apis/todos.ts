@@ -12,15 +12,15 @@ export interface TodoResponse extends ApiResponse<Todo> {
 }
 
 export interface CreateTodoRequest {
-  task: string;
-  done: boolean;
+  title: string;
+  completed: boolean;
   priority: number;
   dueDate: string;
 }
 
 export interface UpdateTodoRequest {
-  task?: string;
-  done?: boolean;
+  title?: string;
+  completed?: boolean;
   priority?: number;
   dueDate?: string;
 }
@@ -31,7 +31,7 @@ export interface TodoQueryParams {
   sortBy?: 'priority' | 'dueDate' | 'createdAt';
   sortOrder?: 'asc' | 'desc';
   search?: string;
-  done?: boolean;
+  completed?: boolean;
 }
 
 // Todo API service

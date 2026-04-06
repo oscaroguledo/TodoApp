@@ -82,7 +82,7 @@ export function App() {
     // 1. Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      result = result.filter((todo) => todo.task.toLowerCase().includes(query));
+      result = result.filter((todo) => todo.title.toLowerCase().includes(query));
     }
     // 2. Sort
     if (sortBy === 'priority') {
@@ -213,9 +213,9 @@ export function App() {
         }>
           <TodoList
             todos={paginatedTodos}
-            onToggle={(id, done) =>
+            onToggle={(id, completed) =>
             updateTodo(id, {
-              done
+              completed
             })
             }
             onEdit={setEditingTodo}

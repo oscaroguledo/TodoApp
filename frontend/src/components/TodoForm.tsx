@@ -15,12 +15,12 @@ export function TodoForm({
   initialData,
   onCancelEdit
 }: TodoFormProps) {
-  const [task, setTask] = useState('');
+  const [title, setTitle] = useState('');
   const [priority, setPriority] = useState<number>(3);
   const [dueDate, setDueDate] = useState('');
   useEffect(() => {
     if (initialData) {
-      setTask(initialData.task);
+      setTitle(initialData.title);
       setPriority(initialData.priority);
       // Format date for input type="date" (YYYY-MM-DD)
       const dateStr = initialData.dueDate ?
@@ -32,7 +32,7 @@ export function TodoForm({
     }
   }, [initialData]);
   const resetForm = () => {
-    setTask('');
+    setTitle('');
     setPriority(3);
     setDueDate('');
   };
@@ -46,14 +46,14 @@ export function TodoForm({
   ];
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!task.trim()) return;
+    if (!title.trim()) return;
     onSubmit({
-      task: task.trim(),
+      title: title.trim(),
       priority,
       dueDate: dueDate ?
       new Date(dueDate).toISOString() :
       new Date().toISOString(),
-      done: initialData ? initialData.done : false
+      completed: initialData ? initialData.completed : false
     });
     if (!initialData) {
       resetForm();
@@ -70,8 +70,8 @@ export function TodoForm({
       <div className="w-full">
         <Input
           placeholder="What needs to be done?"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           required
         />
       </div>
@@ -120,7 +120,7 @@ export function TodoForm({
 
         <Button
           type="submit"
-          disabled={!task.trim()}
+          disabled={!title.trim()}
           icon={<PlusIcon size={14} />}
           className="w-full sm:w-auto"
         >

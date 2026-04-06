@@ -1,7 +1,7 @@
 export interface Todo {
   id: string;
-  task: string;
-  done: boolean;
+  title: string;
+  completed: boolean;
   priority: number; // 1 (lowest) to 5 (highest)
   dueDate: string; // ISO date string
 }

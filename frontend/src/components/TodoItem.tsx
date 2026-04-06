@@ -3,7 +3,7 @@ import { Todo } from '@/types/todo';
 import { Button, Badge, Checkbox, Card } from '@/components/ui';
 interface TodoItemProps {
   todo: Todo;
-  onToggle: (id: string, done: boolean) => void;
+  onToggle: (id: string, completed: boolean) => void;
   onEdit: (todo: Todo) => void;
   onDelete: (id: string) => void;
   isDragDisabled?: boolean;
@@ -29,8 +29,8 @@ export function TodoItem({
   return (
     <Card
       variant="default"
-      hover={!todo.done}
-      className={`group transition-all ${todo.done ? 'opacity-75' : ''}`}
+      hover={!todo.completed}
+      className={`group transition-all ${todo.completed ? 'opacity-75' : ''}`}
     >
       <div className="flex items-start sm:items-center gap-2 sm:gap-3">
         <div
@@ -41,17 +41,17 @@ export function TodoItem({
 
         <div className="flex-shrink-0 mt-0.5 sm:mt-0">
           <Checkbox
-            checked={todo.done}
+            checked={todo.completed}
             onChange={(e) => onToggle(todo.id, e.target.checked)}
-            disabled={todo.done}
+            disabled={todo.completed}
           />
         </div>
 
         <div className="flex-1 min-w-0 flex flex-col gap-1 sm:gap-2">
           <span
-            className={`text-sm sm:text-base font-medium truncate transition-colors ${todo.done ? 'text-slate-400 line-through' : 'text-slate-900'}`}>
+            className={`text-sm sm:text-base font-medium truncate transition-colors ${todo.completed ? 'text-slate-400 line-through' : 'text-slate-900'}`}>
             
-            {todo.task}
+            {todo.title}
           </span>
 
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
@@ -59,7 +59,7 @@ export function TodoItem({
               P{todo.priority}
             </Badge>
 
-            <div className={`flex items-center gap-1 ${todo.done ? 'text-slate-400' : 'text-slate-500'}`}>
+            <div className={`flex items-center gap-1 ${todo.completed ? 'text-slate-400' : 'text-slate-500'}`}>
               
               <CalendarIcon size={12} className="sm:w-3 sm:h-3" />
               <span className="hidden sm:inline">{formattedDate}</span>
