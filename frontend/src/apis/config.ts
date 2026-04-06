@@ -50,8 +50,6 @@ export const HTTP_STATUS = {
 export const ERROR_MESSAGES = {
   NETWORK_ERROR: 'Network error - Unable to connect to server',
   TIMEOUT_ERROR: 'Request timed out - Please try again',
-  UNAUTHORIZED: 'Unauthorized - Please login again',
-  FORBIDDEN: 'Forbidden - Insufficient permissions',
   NOT_FOUND: 'Resource not found',
   SERVER_ERROR: 'Server error - Please try again later',
   UNKNOWN_ERROR: 'An unknown error occurred',

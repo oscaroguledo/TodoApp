@@ -1,6 +1,6 @@
 # Environment Variables
 
-This application uses environment variables for configuration. Copy `.env.example` to `.env.local` for local development.
+This application uses environment variables for configuration. The `.env` file is located in the project root directory.
 
 ## Required Variables
 
@@ -59,38 +59,17 @@ Number of retry attempts for failed API requests.
 REACT_APP_RETRY_ATTEMPTS=5
 ```
 
-### `REACT_APP_AUTH_TOKEN`
-JWT authentication token (for development/testing only).
-
-**Default:** `undefined`
-
-**Example:**
-```bash
-REACT_APP_AUTH_TOKEN=your-jwt-token-here
-```
-
 ## Setup Instructions
 
 1. **For Local Development:**
-   ```bash
-   cp .env.example .env.local
-   ```
-   Then edit `.env.local` with your local configuration.
-
+   The `.env` file is already configured in the project root.
+   
 2. **For Production:**
    Set the environment variables in your hosting platform (Vercel, Netlify, etc.).
-
-## Environment Variable Priority
-
-1. `.env.local` (highest priority)
-2. `.env.development` (for development)
-3. `.env.production` (for production)
-4. `.env` (default)
-5. System environment variables (lowest priority)
 
 ## Notes
 
 - All environment variables must be prefixed with `REACT_APP_` to be accessible in the React app.
-- The `.env` files are ignored by Git to prevent sensitive data from being committed.
-- Never commit actual API keys or tokens to version control.
+- The `.env` file is committed to version control since it contains no sensitive data.
 - Use different values for development, staging, and production environments.
+- No authentication is required for this application.

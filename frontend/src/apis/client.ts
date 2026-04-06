@@ -10,15 +10,9 @@ export const apiClient: AxiosInstance = axios.create({
   },
 });
 
-// Request interceptor for logging and auth
+// Request interceptor for logging
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth token if available (from localStorage or environment)
-    const token = localStorage.getItem('authToken') || process.env.REACT_APP_AUTH_TOKEN;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    
     // Log requests in development
     if (API_CONFIG.ENABLE_LOGGING) {
       console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`);
@@ -48,14 +42,6 @@ apiClient.interceptors.response.use(
       const { status, data } = error.response;
       
       switch (status) {
-        case HTTP_STATUS.UNAUTHORIZED:
-          console.error('🔒 Unauthorized - Please login again');
-          // Clear invalid token
-          localStorage.removeItem('authToken');
-          break;
-        case HTTP_STATUS.FORBIDDEN:
-          console.error('🚫 Forbidden - Insufficient permissions');
-          break;
         case HTTP_STATUS.NOT_FOUND:
           console.error('🔍 Not Found - Resource does not exist');
           break;
