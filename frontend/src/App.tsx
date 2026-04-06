@@ -7,7 +7,7 @@ import {
 'lucide-react';
 import { useTodos } from '@/hooks/useTodos';
 import { TodoLogo } from '@/components/TodoLogo';
-import { Input } from '@/components/ui';
+import { Input, ThemeToggle } from '@/components/ui';
 
 // Lazy loaded components
 const TodoForm = lazy(() => import('@/components/TodoForm').then(module => ({ default: module.TodoForm })));
@@ -122,6 +122,8 @@ export function App() {
           <div className="text-xs text-slate-400 bg-slate-100 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full hidden lg:block">
             PWA ready: Configure manifest.json after deployment
           </div>
+
+          <ThemeToggle />
         </header>
 
         {/* Error Banner */}

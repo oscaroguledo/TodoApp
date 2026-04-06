@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { getTodos, createTodo, updateTodo as updateTodoApi, deleteTodo as deleteTodoApi, ApiError } from '@/apis';
 import { Todo } from '@/types/todo';
-
-const API_URL = 'http://localhost:3000/todos';
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -12,12 +10,13 @@ export function useTodos() {
   const fetchTodos = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API_URL);
-      setTodos(res.data);
+      const data = await getTodos();
+      setTodos(data);
       setError(null);
     } catch (err) {
+      const apiError = err as ApiError;
       setError(
-        'Failed to fetch todos. Ensure the backend is running at http://localhost:3000'
+        apiError.message || 'Failed to fetch todos. Ensure the backend is running.'
       );
       // Fallback to empty array on error
       setTodos([]);
@@ -37,27 +36,29 @@ export function useTodos() {
     setTodos((prev) => [...prev, optimisticTodo]);
 
     try {
-      const res = await axios.post(API_URL, newTodo);
+      const createdTodo = await createTodo(newTodo as any);
       // Replace temp ID with real ID from server
-      setTodos((prev) => prev.map((t) => t.id === tempId ? res.data : t));
+      setTodos((prev) => prev.map((t) => t.id === tempId ? createdTodo : t));
     } catch (err) {
       // Revert on failure
       setTodos((prev) => prev.filter((t) => t.id !== tempId));
-      setError('Failed to add todo');
+      const apiError = err as ApiError;
+      setError(apiError.message || 'Failed to add todo');
     }
   };
 
   const updateTodo = async (id: string, updates: Partial<Todo>) => {
     const previousTodos = [...todos];
     setTodos((prev) =>
-    prev.map((t) => t.id === id ? { ...t, ...updates } : t)
+      prev.map((t) => t.id === id ? { ...t, ...updates } : t)
     );
 
     try {
-      await axios.put(`${API_URL}/${id}`, updates);
+      await updateTodoApi(id, updates as any);
     } catch (err) {
       setTodos(previousTodos);
-      setError('Failed to update todo');
+      const apiError = err as ApiError;
+      setError(apiError.message || 'Failed to update todo');
     }
   };
 
@@ -66,10 +67,11 @@ export function useTodos() {
     setTodos((prev) => prev.filter((t) => t.id !== id));
 
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await deleteTodoApi(id);
     } catch (err) {
       setTodos(previousTodos);
-      setError('Failed to delete todo');
+      const apiError = err as ApiError;
+      setError(apiError.message || 'Failed to delete todo');
     }
   };
 
@@ -80,7 +82,13 @@ export function useTodos() {
 
     setTodos(result);
     // Optional: Sync new order to backend if your API supports bulk updates or order fields
+    // We could call bulkUpdateTodos here if the backend supports it
   };
+
+  // Clear error function
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
 
   return {
     todos,
@@ -89,6 +97,8 @@ export function useTodos() {
     addTodo,
     updateTodo,
     deleteTodo,
-    reorderTodos
+    reorderTodos,
+    clearError,
+    refetch: fetchTodos,
   };
 }

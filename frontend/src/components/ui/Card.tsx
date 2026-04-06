@@ -17,9 +17,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     ...props
   }, ref) => {
     const variants = {
-      default: 'bg-white border border-slate-200',
-      outlined: 'bg-white border-2 border-slate-300',
-      elevated: 'bg-white border border-slate-200 shadow-lg'
+      default: 'bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700',
+      outlined: 'bg-white border-2 border-slate-300 dark:bg-slate-800 dark:border-slate-600',
+      elevated: 'bg-white border border-slate-200 shadow-lg dark:bg-slate-800 dark:border-slate-700'
     };
 
     const paddings = {
@@ -33,7 +33,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       <motion.div
         ref={ref}
         className={`rounded-xl transition-all ${variants[variant]} ${paddings[padding]} ${className} ${
-          hover ? 'hover:shadow-md hover:border-slate-300' : ''
+          hover ? 'hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600' : ''
         }`}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

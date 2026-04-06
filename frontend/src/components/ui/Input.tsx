@@ -45,12 +45,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           
           <motion.input
             ref={ref}
-            className={`w-full px-2.5 sm:px-3 py-2 bg-white border rounded-lg text-sm sm:text-base text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+            className={`w-full px-2.5 sm:px-3 py-2 bg-white border rounded-lg text-sm sm:text-base text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all dark:bg-slate-800 dark:text-slate-100 dark:placeholder-slate-400 ${
               startIcon ? 'pl-8 sm:pl-10' : ''
             } ${
               endIcon || showClearButton ? 'pr-8 sm:pr-10' : ''
             } ${
-              error ? 'border-red-300 focus:ring-red-500' : 'border-slate-300'
+              error ? 'border-red-300 focus:ring-red-500' : 'border-slate-300 dark:border-slate-600'
             } ${className}`}
             value={value}
             whileFocus={{ scale: 1.01 }}
