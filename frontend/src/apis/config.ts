@@ -3,31 +3,15 @@ export const API_CONFIG = {
   // Base URL for API calls - from environment variable
   BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:3000',
   
-  // Request timeout in milliseconds - from environment variable
-  TIMEOUT: parseInt(process.env.REACT_APP_API_TIMEOUT || '10000', 10),
-  
-  // Retry configuration
-  RETRY_ATTEMPTS: parseInt(process.env.REACT_APP_RETRY_ATTEMPTS || '3', 10),
-  RETRY_DELAY: 1000,
-  
   // Pagination defaults
   DEFAULT_PAGE_SIZE: 10,
   MAX_PAGE_SIZE: 100,
   
-  // Cache settings (in milliseconds)
-  CACHE_TTL: 5 * 60 * 1000, // 5 minutes
-  
-  // Feature flags
-  ENABLE_CACHING: false,
-  ENABLE_RETRY: process.env.REACT_APP_ENABLE_RETRY !== 'false',
-  ENABLE_LOGGING: process.env.REACT_APP_ENABLE_API_LOGGING === 'true' || process.env.NODE_ENV === 'development',
 };
 
 // API Endpoints
 export const API_ENDPOINTS = {
   TODOS: '/todos',
-  AUTH: '/auth',
-  USERS: '/users',
 } as const;
 
 // HTTP Status Codes
@@ -36,10 +20,7 @@ export const HTTP_STATUS = {
   CREATED: 201,
   NO_CONTENT: 204,
   BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
   NOT_FOUND: 404,
-  CONFLICT: 409,
   UNPROCESSABLE_ENTITY: 422,
   INTERNAL_SERVER_ERROR: 500,
   BAD_GATEWAY: 502,
