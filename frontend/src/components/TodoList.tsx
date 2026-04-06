@@ -58,33 +58,21 @@ export function TodoList({
               key={todo.id}
               draggableId={todo.id}
               index={index}
-              isDragDisabled={isDragDisabled}>
+              isDragDisabled={false}>
               
                   {(provided, snapshot) =>
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                style={{
-                  ...provided.draggableProps.style,
-                  ...(snapshot.isDragging ?
-                  {
-                    zIndex: 50,
-                    transform: provided.draggableProps.style?.transform + ' scale(1.05)',
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                  } :
-                  {})
-                }}>
-                
-                      <TodoItem
-                  todo={todo}
-                  onToggle={onToggle}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                  isDragDisabled={isDragDisabled}
-                  dragHandleProps={provided.dragHandleProps} />
-                
-                    </div>
-              }
+                    <TodoItem
+                      innerRef={provided.innerRef}
+                      draggableProps={provided.draggableProps}
+                      dragHandleProps={isDragDisabled ? {} : provided.dragHandleProps}
+                      isDragging={snapshot.isDragging}
+                      todo={todo}
+                      onToggle={onToggle}
+                      onEdit={onEdit}
+                      onDelete={onDelete}
+                      isDragDisabled={isDragDisabled}
+                    />
+                  }
                 </Draggable>
             )}
             {provided.placeholder}
