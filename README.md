@@ -45,7 +45,7 @@ A modern, full-stack todo application with a clean React frontend and Express.js
 ### 1. Clone & Install
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/oscaroguledo/TodoApp.git>
 cd TodoApp
 
 # Install backend dependencies
@@ -77,26 +77,7 @@ MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/todoapp?retryWrite
 VITE_API_URL=http://localhost:3000
 ```
 
-### 3. Start MongoDB (if using local)
-
-**macOS:**
-```bash
-brew tap mongodb/brew
-brew install mongodb-community
-brew services start mongodb-community
-```
-
-**Ubuntu/Debian:**
-```bash
-sudo systemctl start mongod
-```
-
-**Windows:**
-```powershell
-net start MongoDB
-```
-
-### 4. Run the Application
+### 3. Run the Application
 
 **Terminal 1 - Backend:**
 ```bash
@@ -191,4 +172,4 @@ The app will open at `http://localhost:5173` with API at `http://localhost:3000`
 
 ## License
 
-MIT
+Apache-2.0
