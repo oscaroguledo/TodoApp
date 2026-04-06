@@ -1,4 +1,3 @@
-import { config } from '../core/config.js';
 import { Todo } from '../models/todo.js';
 
 export const getAllTodos = async () => {
