@@ -77,7 +77,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                   ? 'text-slate-400 cursor-not-allowed'
                   : 'text-slate-700'
               }`}
-              onClick={(e) => {
+              onClick={() => {
                 if (!props.disabled) {
                   const input = document.querySelector(`input[name="${props.name}"]`) as HTMLInputElement;
                   if (input) {

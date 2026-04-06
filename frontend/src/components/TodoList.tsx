@@ -94,30 +94,7 @@ export function TodoList({
               isDragDisabled={isDragDisabled}>
               
                   {(provided, snapshot) =>
-              <motion.div
-                layout
-                initial={{
-                  opacity: 0,
-                  scale: 0.95,
-                  y: 20
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: 0
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.95,
-                  y: -20,
-                  transition: {
-                    duration: 0.2
-                  }
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeOut"
-                }}
+              <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -139,7 +116,7 @@ export function TodoList({
                   onDelete={onDelete}
                   isDragDisabled={isDragDisabled} />
                 
-                    </motion.div>
+                    </div>
               }
                 </Draggable>
             )}
