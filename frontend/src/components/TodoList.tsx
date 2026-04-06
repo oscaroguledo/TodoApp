@@ -64,7 +64,6 @@ export function TodoList({
               <div
                 ref={provided.innerRef}
                 {...provided.draggableProps}
-                {...provided.dragHandleProps}
                 style={{
                   ...provided.draggableProps.style,
                   ...(snapshot.isDragging ?
@@ -81,7 +80,8 @@ export function TodoList({
                   onToggle={onToggle}
                   onEdit={onEdit}
                   onDelete={onDelete}
-                  isDragDisabled={isDragDisabled} />
+                  isDragDisabled={isDragDisabled}
+                  dragHandleProps={provided.dragHandleProps} />
                 
                     </div>
               }

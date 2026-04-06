@@ -7,6 +7,7 @@ interface TodoItemProps {
   onEdit: (todo: Todo) => void;
   onDelete: (id: string) => void;
   isDragDisabled?: boolean;
+  dragHandleProps?: any;
 }
 const priorityBadgeVariants: Record<number, 'error' | 'warning' | 'default' | 'secondary'> = {
   5: 'error',
@@ -20,7 +21,8 @@ export function TodoItem({
   onToggle,
   onEdit,
   onDelete,
-  isDragDisabled
+  isDragDisabled,
+  dragHandleProps
 }: TodoItemProps) {
   const formattedDate = new Date(todo.dueDate).toLocaleDateString(undefined, {
     month: 'short',
@@ -34,6 +36,7 @@ export function TodoItem({
     >
       <div className="flex items-start sm:items-center gap-2 sm:gap-3">
         <div
+          {...dragHandleProps}
           className={`text-slate-400 mt-0.5 sm:mt-0 ${isDragDisabled ? 'opacity-0 w-0 overflow-hidden' : 'cursor-grab active:cursor-grabbing hover:text-slate-600'}`}>
           
           <GripVertical size={16} className="sm:w-5 sm:h-5" />
@@ -41,6 +44,7 @@ export function TodoItem({
 
         <div className="flex-shrink-0 mt-0.5 sm:mt-0">
           <Checkbox
+            name={`todo-${todo.id}`}
             checked={todo.completed}
             onChange={(e) => onToggle(todo.id, e.target.checked)}
             disabled={todo.completed}
