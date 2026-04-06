@@ -13,8 +13,8 @@ export const apiClient: AxiosInstance = axios.create({
 // Request interceptor for logging and auth
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth token if available
-    const token = localStorage.getItem('authToken');
+    // Add auth token if available (from localStorage or environment)
+    const token = localStorage.getItem('authToken') || process.env.REACT_APP_AUTH_TOKEN;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

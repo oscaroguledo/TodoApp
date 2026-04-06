@@ -1,13 +1,13 @@
 // API Configuration
 export const API_CONFIG = {
-  // Base URL for API calls
+  // Base URL for API calls - from environment variable
   BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:3000',
   
-  // Request timeout in milliseconds
-  TIMEOUT: 10000,
+  // Request timeout in milliseconds - from environment variable
+  TIMEOUT: parseInt(process.env.REACT_APP_API_TIMEOUT || '10000', 10),
   
   // Retry configuration
-  RETRY_ATTEMPTS: 3,
+  RETRY_ATTEMPTS: parseInt(process.env.REACT_APP_RETRY_ATTEMPTS || '3', 10),
   RETRY_DELAY: 1000,
   
   // Pagination defaults
@@ -19,8 +19,8 @@ export const API_CONFIG = {
   
   // Feature flags
   ENABLE_CACHING: false,
-  ENABLE_RETRY: true,
-  ENABLE_LOGGING: process.env.NODE_ENV === 'development',
+  ENABLE_RETRY: process.env.REACT_APP_ENABLE_RETRY !== 'false',
+  ENABLE_LOGGING: process.env.REACT_APP_ENABLE_API_LOGGING === 'true' || process.env.NODE_ENV === 'development',
 };
 
 // API Endpoints
