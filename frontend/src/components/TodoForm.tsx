@@ -72,29 +72,28 @@ export function TodoForm({
         />
       </div>
 
-      <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-4">
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full sm:w-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <Dropdown
             options={priorityOptions}
             value={priority}
             onChange={(value) => setPriority(Number(value))}
-            className="flex-1 sm:w-32"
+            className="w-full"
           />
-
           <DatePicker
             value={dueDate}
             onChange={setDueDate}
-            className="flex-1 sm:w-40"
+            className="w-full"
           />
         </div>
 
         {initialData ?
-        <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:col-span-2">
             <Button
               type="submit"
               size="sm"
               icon={<CheckIcon size={14} />}
-              className="flex-1 sm:flex-initial"
+              className="w-full"
               title="Update Todo"
             >
               <span className="hidden sm:inline">Update</span>
@@ -106,7 +105,7 @@ export function TodoForm({
               size="sm"
               icon={<XIcon size={14} />}
               onClick={onCancelEdit}
-              className="flex-1 sm:flex-initial"
+              className="w-full"
               title="Cancel Edit"
             >
               <span className="hidden sm:inline">Cancel</span>
@@ -118,7 +117,7 @@ export function TodoForm({
           type="submit"
           disabled={!title.trim()}
           icon={<PlusIcon size={14} />}
-          className="w-full sm:w-auto"
+          className="w-full lg:col-span-2"
         >
           <span className="hidden sm:inline">Add Task</span>
           <span className="sm:hidden">Add</span>
